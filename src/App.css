@@ -1,8 +1,23 @@
-h2 {
-    padding: 0;
-    margin: 0;
+body {
+    background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2020%2F07%2F02%2F04%2F31%2Fmatrix-5361690_1280.png&f=1&nofb=1');
+    background-size: contain;
+}
+
+h1 {
+    color: #fff;
+    background-color: #000000CC;
+    padding: .5em 0;
+    box-shadow: 0 0 1em #222;
+}
+
+.articleHeader {
+    color: #fff;
+    background-color: #000000CC;
+    padding: 0.5em 0;
+    margin: 0.5em 0;
     font-size: 1.5rem;
 }
+
 h3 {
     padding: 0;
     margin: 0;
@@ -15,4 +30,8 @@ h3 {
 }
 #searchButton {
     border-radius: 0 3px 3px 0;
+}
+
+p {
+    text-align: left;
 }
