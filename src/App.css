@@ -1,0 +1,18 @@
+h2 {
+    padding: 0;
+    margin: 0;
+    font-size: 1.5rem;
+}
+h3 {
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+}
+
+#searchField {
+    border-radius: 3px 0 0 3px;
+
+}
+#searchButton {
+    border-radius: 0 3px 3px 0;
+}
