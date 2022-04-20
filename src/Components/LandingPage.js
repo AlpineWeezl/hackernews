@@ -32,7 +32,7 @@ const LandingPage = () => {
                         <Button id='searchButton' type='submit'><FontAwesomeIcon icon={faSearch} ></FontAwesomeIcon></Button>
                     </Stack>
                 </Form>
-                <h2>Articles</h2>
+                <h2 className='articleHeader'>Articles</h2>
                 <Articles search={searchString} signal={startSignal} />
             </main>
         </>
