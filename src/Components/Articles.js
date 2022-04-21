@@ -11,16 +11,25 @@ const Articles = (props) => {
 
   useEffect(() => {
     if (props.search) {
-      console.log(props.search);
+      console.log(`Search URL: ${props.search}`);
       loading = true;
+      let oldArticles = articles;
+      let newArticles = {};
       axios.get(props.search).then(res => {
+        newArticles = res.data.hits;
         setArticles(res.data.hits);
         setHttpStatus(res.status);
-        console.log(res);
+        console.log(articles);
+        // console.log(`Search URL: ${props.search}`);
         console.log(`Number of results: ${res.data.nbHits}`);
-        console.log(`Hits per Page: ${res.data.hitsPerPage}`);
+        console.log(`Articles per Page: ${res.data.hitsPerPage}`);
         console.log(`Number of Page(s): ${res.data.nbPages}`);
         loading = false;
+        newArticles.map((article) => {
+          oldArticles.push(article);
+        });
+        console.log('Old Articles:');
+        console.log(oldArticles);
       }).catch(err => {
         alert(err.message);
       });
@@ -28,7 +37,7 @@ const Articles = (props) => {
       loading = false;
       setHttpStatus(null);
     }
-  }, [props.search, props.articlesPerPage, loading, httpStatus]);
+  }, [props.search, loading]);
 
   const resultParam = () => {
     if (loading) {
@@ -57,7 +66,10 @@ const Articles = (props) => {
                   <Accordion className='border my-3 shadow'>
                     <Accordion.Header>
                       <Stack direction="horizontal" gap={3}>
-                        <h3 className='cardHeader me-2 text-nowrap'>{format(new Date(article.created_at), 'yyyy-MM-dd')}</h3>
+                        <Stack>
+                          <h3>#{article.objectID}</h3>
+                          <h3 className='cardHeader me-2 text-nowrap'>{format(new Date(article.created_at), 'yyyy-MM-dd')}</h3>
+                        </Stack>
                         <h3>{article.title}</h3>
                       </Stack>
                     </Accordion.Header>
