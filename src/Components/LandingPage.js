@@ -6,18 +6,16 @@ import Articles from './Articles'
 import Header from './Header'
 
 const LandingPage = () => {
-
-
     const baseUrl = 'http://hn.algolia.com/api/v1/';
     const initialSearch = 'search?tags=front_page';
     const [searchString, setSearchString] = useState(null);
     const [searchUrl, setSearchUrl] = useState('');
     const [hitsPerPage, setHitsPerPage] = useState(25);
-    const [page, setPage] = useState(1);
+    const [newSearch, setNewSearch] = useState(true);
 
     useEffect(() => {
         handleSearch();
-    }, [searchUrl, hitsPerPage])
+    }, [searchUrl])
 
     const handleSearch = (e, articlesPerPage) => {
         if (!(articlesPerPage === hitsPerPage)) {
@@ -27,21 +25,17 @@ const LandingPage = () => {
             } else {
                 articlesPerPage = hitsPerPage;
             };
-            !searchString && searchString != '' ? setSearchUrl(`${baseUrl}${initialSearch}&hitsPerPage=${hitsPerPage}`) : setSearchUrl(`${baseUrl}search?query=${searchString}&hitsPerPage=${hitsPerPage}`);
-            console.log(`Articles: ${articlesPerPage}`);
-            console.log(`Hits: ${hitsPerPage}`);
+            setNewSearch(true)
+            !searchString && searchString != '' ?
+                (
+                    setSearchUrl(`${baseUrl}${initialSearch}&hitsPerPage=${hitsPerPage}`)
+                ) : (
+                    setSearchUrl(`${baseUrl}search?query=${searchString}&hitsPerPage=${hitsPerPage}`)
+                )
+            // console.log(`Articles: ${articlesPerPage}`);
+            // console.log(`Hits: ${hitsPerPage}`);
         }
     }
-
-    // const handleScroll = () => {
-    //     let isAtBottom = (document.documentElement.scrollHeight - document.documentElement.scrollTop) <= document.documentElement.clientHeight;
-    //     if (isAtBottom) {
-    //         // Load next posts
-    //         setHitsPerPage(hitsPerPage + 25);
-    //     }
-    // }
-
-    // window.addEventListener("scroll", handleScroll);
 
     return (
         <>
@@ -58,17 +52,16 @@ const LandingPage = () => {
                             placeholder='Enter your keyword(s) here'
                             onChange={e => setSearchString(e.target.value)}
                         />
-                        <Button id='searchButton' type='submit'><FontAwesomeIcon icon={faSearch} ></FontAwesomeIcon></Button>
+                        <Button id='searchButton' type='submit'><FontAwesomeIcon icon={faSearch} /></Button>
                     </Stack>
                 </Form>
-                <h2 className='articleHeader'>Articles</h2>
-                <Stack id='hppContainer' direction='horizontal'>
+                <Stack id='hppContainer' direction='horizontal' hidden>
                     <h3 id="hpp">Hits per page:</h3>
                     <Button onClick={(e) => { handleSearch(e, 10) }} className='hitsPerPage'>10</Button>
                     <Button onClick={(e) => { handleSearch(e, 25) }} className='hitsPerPage'>25</Button>
                     <Button onClick={(e) => { handleSearch(e, 50) }} className='hitsPerPage'>50</Button>
                 </Stack>
-                <Articles search={searchUrl} />
+                <Articles search={searchUrl} newSearch={newSearch} />
             </main>
         </>
     )
