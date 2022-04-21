@@ -1,24 +1,35 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Accordion, Container, Row, Stack } from 'react-bootstrap';
+import { Accordion, Stack } from 'react-bootstrap';
 import { format } from 'date-fns';
 
 let loading = false;
 
 const Articles = (props) => {
-  const [baseUrl, setBaseUrl] = useState('http://hn.algolia.com/api/v1/search?query=');
   const [articles, setArticles] = useState(null);
   const [httpStatus, setHttpStatus] = useState(null);
-  const [articlesPerPage, setArticlesPerPage] = useState(20);
 
   useEffect(() => {
     if (props.search) {
+      console.log(`Search URL: ${props.search}`);
       loading = true;
-      const completeUrl = `${baseUrl}${props.search}`;
-      axios.get(completeUrl).then(res => {
+      let oldArticles = articles;
+      let newArticles = {};
+      axios.get(props.search).then(res => {
+        newArticles = res.data.hits;
         setArticles(res.data.hits);
         setHttpStatus(res.status);
+        console.log(articles);
+        // console.log(`Search URL: ${props.search}`);
+        console.log(`Number of results: ${res.data.nbHits}`);
+        console.log(`Articles per Page: ${res.data.hitsPerPage}`);
+        console.log(`Number of Page(s): ${res.data.nbPages}`);
         loading = false;
+        newArticles.map((article) => {
+          oldArticles.push(article);
+        });
+        console.log('Old Articles:');
+        console.log(oldArticles);
       }).catch(err => {
         alert(err.message);
       });
@@ -26,7 +37,7 @@ const Articles = (props) => {
       loading = false;
       setHttpStatus(null);
     }
-  }, [props.signal, loading, httpStatus]);
+  }, [props.search, loading]);
 
   const resultParam = () => {
     if (loading) {
@@ -55,15 +66,18 @@ const Articles = (props) => {
                   <Accordion className='border my-3 shadow'>
                     <Accordion.Header>
                       <Stack direction="horizontal" gap={3}>
-                        <h3 className='cardHeader me-2 text-nowrap'>{format(new Date(article.created_at), 'yyyy-MM-dd')}</h3>
+                        <Stack>
+                          <h3>#{article.objectID}</h3>
+                          <h3 className='cardHeader me-2 text-nowrap'>{format(new Date(article.created_at), 'yyyy-MM-dd')}</h3>
+                        </Stack>
                         <h3>{article.title}</h3>
                       </Stack>
                     </Accordion.Header>
                     <Accordion.Body className='bg-white'>
                       {article.story_text ? (
-                        <p>Articletext:<br />
+                        <h4>Articletext:<br />
                           <p>{article.story_text}</p>
-                        </p>
+                        </h4>
                       ) : ''}
                       <p>Author: {article.author}</p>
                       <p>Link: <a href={`${article.url}`} target='_blank'>Link</a></p>

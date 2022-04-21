@@ -6,13 +6,42 @@ import Articles from './Articles'
 import Header from './Header'
 
 const LandingPage = () => {
-    const [searchString, setSearchString] = useState('');
-    const [startSignal, setStartSignal] = useState(false);
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        startSignal ? setStartSignal(false) : setStartSignal(true);
+
+    const baseUrl = 'http://hn.algolia.com/api/v1/';
+    const initialSearch = 'search?tags=front_page';
+    const [searchString, setSearchString] = useState(null);
+    const [searchUrl, setSearchUrl] = useState('');
+    const [hitsPerPage, setHitsPerPage] = useState(25);
+    const [page, setPage] = useState(1);
+
+    useEffect(() => {
+        handleSearch();
+    }, [searchUrl, hitsPerPage])
+
+    const handleSearch = (e, articlesPerPage) => {
+        if (!(articlesPerPage === hitsPerPage)) {
+            if (e) { e.preventDefault() };
+            if (articlesPerPage) {
+                setHitsPerPage(articlesPerPage);
+            } else {
+                articlesPerPage = hitsPerPage;
+            };
+            !searchString && searchString != '' ? setSearchUrl(`${baseUrl}${initialSearch}&hitsPerPage=${hitsPerPage}`) : setSearchUrl(`${baseUrl}search?query=${searchString}&hitsPerPage=${hitsPerPage}`);
+            console.log(`Articles: ${articlesPerPage}`);
+            console.log(`Hits: ${hitsPerPage}`);
+        }
     }
+
+    // const handleScroll = () => {
+    //     let isAtBottom = (document.documentElement.scrollHeight - document.documentElement.scrollTop) <= document.documentElement.clientHeight;
+    //     if (isAtBottom) {
+    //         // Load next posts
+    //         setHitsPerPage(hitsPerPage + 25);
+    //     }
+    // }
+
+    // window.addEventListener("scroll", handleScroll);
 
     return (
         <>
@@ -22,18 +51,24 @@ const LandingPage = () => {
             <main className='w-50 text-center mx-auto'>
                 <Form onSubmit={handleSearch}>
                     <Stack direction='horizontal'>
-                            <FormLabel className='me-2' hidden><h2>Search</h2></FormLabel>
-                            <FormControl
-                                id='searchField'
-                                type='text'
-                                placeholder='Enter your keyword(s) here'
-                                onChange={e => setSearchString(e.target.value)}
-                            />
+                        <FormLabel className='me-2' hidden><h2>Search</h2></FormLabel>
+                        <FormControl
+                            id='searchField'
+                            type='text'
+                            placeholder='Enter your keyword(s) here'
+                            onChange={e => setSearchString(e.target.value)}
+                        />
                         <Button id='searchButton' type='submit'><FontAwesomeIcon icon={faSearch} ></FontAwesomeIcon></Button>
                     </Stack>
                 </Form>
                 <h2 className='articleHeader'>Articles</h2>
-                <Articles search={searchString} signal={startSignal} />
+                <Stack id='hppContainer' direction='horizontal'>
+                    <h3 id="hpp">Hits per page:</h3>
+                    <Button onClick={(e) => { handleSearch(e, 10) }} className='hitsPerPage'>10</Button>
+                    <Button onClick={(e) => { handleSearch(e, 25) }} className='hitsPerPage'>25</Button>
+                    <Button onClick={(e) => { handleSearch(e, 50) }} className='hitsPerPage'>50</Button>
+                </Stack>
+                <Articles search={searchUrl} />
             </main>
         </>
     )
