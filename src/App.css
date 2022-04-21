@@ -24,6 +24,21 @@ h3 {
     font-size: 1rem;
 }
 
+#hppContainer {
+    color: #fff;
+    background-color: #000000CC;
+    padding: 0.5em 1.5em;
+    margin: 0 auto;
+}
+
+#hpp {
+    margin-right: 1em;
+}
+
+.hitsPerPage {
+    margin-right: 1em;
+}
+
 #searchField {
     border-radius: 3px 0 0 3px;
 
