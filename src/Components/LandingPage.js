@@ -39,10 +39,10 @@ const LandingPage = () => {
 
     return (
         <>
-            <header className='text-center'>
+            <header className='text-center sticky-top mb-3'>
                 <Header />
             </header>
-            <main className='w-50 text-center mx-auto'>
+            <main className='mx-3 text-center'>
                 <Form onSubmit={handleSearch}>
                     <Stack direction='horizontal'>
                         <FormLabel className='me-2' hidden><h2>Search</h2></FormLabel>
@@ -55,12 +55,6 @@ const LandingPage = () => {
                         <Button id='searchButton' type='submit'><FontAwesomeIcon icon={faSearch} /></Button>
                     </Stack>
                 </Form>
-                <Stack id='hppContainer' direction='horizontal' hidden>
-                    <h3 id="hpp">Hits per page:</h3>
-                    <Button onClick={(e) => { handleSearch(e, 10) }} className='hitsPerPage'>10</Button>
-                    <Button onClick={(e) => { handleSearch(e, 25) }} className='hitsPerPage'>25</Button>
-                    <Button onClick={(e) => { handleSearch(e, 50) }} className='hitsPerPage'>50</Button>
-                </Stack>
                 <Articles search={searchUrl} newSearch={newSearch} />
             </main>
         </>
