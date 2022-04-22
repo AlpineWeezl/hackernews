@@ -1,6 +1,6 @@
 {
   "name": "hackernews",
-  "homepage": "https://alpineweezl.github.io/hackernews/",
+  "homepage": "./",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

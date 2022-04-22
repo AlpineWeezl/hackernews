@@ -19,7 +19,7 @@ const Pageinate = (props) => {
                     const pageButtons = [];
                     for (let i = 1; i <= props.pages; i++) {
                         if (i < 6 || (props.pages > 6 && i === props.pages)) {
-                            pageButtons.push(<Button className='mx-2' id={`page${i}`}>{i}</Button>);
+                            pageButtons.push(<Button className='mx-2' key={`page${i}`}>{i}</Button>);
                         } else if (i === 7) {
                             pageButtons.push(<p><FontAwesomeIcon icon={faEllipsisH}/></p>)
                         }
