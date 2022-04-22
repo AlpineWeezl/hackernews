@@ -42,7 +42,7 @@ const LandingPage = () => {
             <header className='text-center sticky-top mb-3'>
                 <Header />
             </header>
-            <main className='mx-3 text-center'>
+            <main className='w-75 mx-auto text-center'>
                 <Form onSubmit={handleSearch}>
                     <Stack direction='horizontal'>
                         <FormLabel className='me-2' hidden><h2>Search</h2></FormLabel>
