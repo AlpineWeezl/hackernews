@@ -26,7 +26,7 @@ const LandingPage = () => {
                 articlesPerPage = hitsPerPage;
             };
             setNewSearch(true)
-            !searchString && searchString != '' ?
+            !searchString && searchString !== '' ?
                 (
                     setSearchUrl(`${baseUrl}${initialSearch}&hitsPerPage=${hitsPerPage}`)
                 ) : (
