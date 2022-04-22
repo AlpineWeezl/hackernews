@@ -15,6 +15,10 @@ const Articles = (props) => {
     const [loadMore, setLoadMore] = useState(false);
 
     const getData = () => {
+        
+    }
+
+    useEffect(() => {
         if (currentPage < numPages) {
             if (props.search) {
                 loading = true;
@@ -46,10 +50,6 @@ const Articles = (props) => {
                 httpStatus = null;
             }
         }
-    }
-
-    useEffect(() => {
-        getData();
     }, [props.search, loadMore]);
 
     const resultParam = () => {
