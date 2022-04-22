@@ -52,8 +52,6 @@ const Articles = (props) => {
         getData();
     }, [props.search, loadMore]);
 
-    
-
     const resultParam = () => {
         if (loading) {
             return ('loading');
