@@ -6,7 +6,7 @@ import Articles from './Articles'
 import Header from './Header'
 
 const LandingPage = () => {
-    const baseUrl = 'http://hn.algolia.com/api/v1/';
+    const baseUrl = 'https://hn.algolia.com/api/v1/';
     const initialSearch = 'search?tags=front_page';
     const [searchString, setSearchString] = useState(null);
     const [searchUrl, setSearchUrl] = useState('');
